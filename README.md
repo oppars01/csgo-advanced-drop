@@ -13,5 +13,6 @@ In the game "Counter-Strike: Global Offensive", it allows the drop to drop befor
 "Counter-Strike: Global Offensive" oyununda harita süresi bitmeden drop düşmesini sağlar. Düşen dropları bildirim olarak discord sunucunuza atar. Düşen bir ögenin fiyat tipi cvar üzerinden belirlenerek anlık fiyatını bulur. Drop ögeleri komut ile veya her harita başlangıcında otomatik olarak güncellenir. Steam Api üzerinden sağlanan verileri aşağıda belirtilen sitede basit şekilde "json" ve "vdf" formatına çevrilmiş olarak bulabilirsiniz. Web sitesinden çekme durumunda hata olması durumunda "csgo/addons/sourcemod/configs/CSGO-Turkiye_com/dropitems.cfg" dosyasına manuel olarak düzenleyebilirsiniz. Çge isimlerini değiştirirseniniz market fiyatında hata verecektir. "csgo/addons/sourcemod/logs/advanced_drop.log" klasöründe tümkayıtları bulabilirsiniz.
 
 **JSON:** https://csgo-turkiye.com/api/csgo-items?format=json
+
 **VDF:** https://csgo-turkiye.com/api/csgo-items?format=vdf or https://csgo-turkiye.com/api/csgo-items
 
