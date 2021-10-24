@@ -40,5 +40,5 @@ Drop ögelerini güncellemek için kullanılır.
 | sm_price_advenced_drop | 1 (1:$ - 2:£ - 3:€ - 4:CHF - 5:pуб. - 6:zł - 7:R$ - 8:¥ - 9:kr - 10:Rp - 11:RM - 12:P - 13:S$ - 14:฿ - 15:₫ - 16:₩ - 17:TL - 18:₴ - 19:Mex$ - 20:CDN$ - 21:A$ - 22:NZ$ - 23:¥ - 24:₹ - 25:CLP$ - 26:S/. - 27:COL$ - 28:R - 29:HK$ - 30:NT$ - 31:SR - 32:AED - 34:ARS$ - 35:₪ - 37:₸ - 38:KD - 39:QR - 40:₡ - 41:$U) | Advanced Drop Item Price | Para Birimi |
 | sm_wait_timer_advenced_drop | 182 | How many seconds should a drop attempt be made? (3Do not do less than 3 minutes, ideal is 10 minutes) | Kaç saniye düşme denemesi yapılmalıdır? (3 dakikadan az yapmayın, ideali 10 dakikadır) |
 | sm_chat_info_advenced_drop | 1 | Show drop attempts in chat? | Drop denemeleri sohbette gösterilsin mi? |
-| sm_sound_status_advenced_drop | 2 | Play a sound when the drop drops? [0 - no | 1 - just drop it | 2 - to everyone] | Drop düştüğünde bir ses çalınsın mı? [0 - hayır | 1 - sadece drop düşene | 2 - herkese] |
+| sm_sound_status_advenced_drop | 2 | Play a sound when the drop drops? [0 - no _ 1 - just drop it _ 2 - to everyone] | Drop düştüğünde bir ses çalınsın mı? [0 - hayır _ 1 - sadece drop düşene _ 2 - herkese] |
 
