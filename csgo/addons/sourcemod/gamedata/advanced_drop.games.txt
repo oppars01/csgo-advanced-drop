@@ -1,0 +1,67 @@
+"Games"
+{
+	"csgo"
+	{
+		"Offsets"
+		{
+			"OS"
+			{
+				"linux"		"1"
+				"windows"	"2"
+			}
+		}
+		"Addresses"
+		{
+			"DropForAllPlayersPatch"
+			{
+				"signature"	"Helper_FillServerReservationStateAndPlayers"
+				"linux"
+				{
+					"offset"	"426"
+				}
+				"windows"
+				{
+					"offset"	"478"
+				}
+			}
+		}
+		"Functions"
+		{
+			"CCSGameRules::RecordPlayerItemDrop"
+			{
+				"signature"	"CCSGameRules::RecordPlayerItemDrop"
+				"callconv"	"thiscall"
+				"return"	"void"
+				"this"		"ignore"
+				"arguments"
+				{
+					"iteminfo"
+					{
+						"type"	"objectptr"
+					}
+				}
+			}
+		}
+		"Signatures"
+		{
+			"CCSGameRules::RewardMatchEndDrops"
+			{
+				"library"		"server"
+				"linux"			"\x55\x89\xE5\x83\xEC\x58\xA1\x2A\x2A\x2A\x2A\x89\x5D\xF4\x89\x75\xF8\x0F\xB6\x5D\x0C"
+				"windows"		"\x55\x8B\xEC\x83\xE4\xF8\xA1\x2A\x2A\x2A\x2A\x83\xEC\x1C\xB9"
+			}
+			"CCSGameRules::RecordPlayerItemDrop"
+			{
+				"library"		"server"
+				"linux"			"\x55\x89\xE5\x57\x56\x53\x83\xEC\x3C\x8B\x45\x08\x8B\x5D\x0C\x8B\x80\x2A\x0E\x00\x00"
+				"windows"		"\x55\x8B\xEC\x53\x8B\xD9\x33\xD2\x56\x57\x8B\x7D\x08"
+			}
+			"Helper_FillServerReservationStateAndPlayers"
+			{
+				"library"		"server"
+				"linux"			"\x55\x89\xE5\x57\x56\x53\x83\xEC\x7C\xA1\x2A\x2A\x2A\x2A\x8B\x75\x08\x8B\x10"
+				"windows"		"\x55\x8B\xEC\x83\xEC\x64\x53\x8B\xD9\x8B\x0D"
+			}
+		}
+	}
+}
