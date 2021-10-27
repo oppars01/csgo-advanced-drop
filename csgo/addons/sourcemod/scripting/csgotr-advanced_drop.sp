@@ -205,7 +205,7 @@ void UpdateDropItems(HTTPResponse response, int client)
         if(client==0){
             PrintToServer("%s Failed to Update Drop Items",s_tag_plugin);
         }else{
-            if (IsClientConnected(client) && IsValidClient(client) && !IsFakeClient(client))
+            if (IsValidClient(client))
             {
                 PrintToChat(client," \x10%s \x02Failed to Update Drop Items",s_tag_plugin);
             }
@@ -217,7 +217,7 @@ void UpdateDropItems(HTTPResponse response, int client)
         if(client==0){
             PrintToServer("%s Invalid Drop Items",s_tag_plugin);
         }else{
-            if (IsClientConnected(client) && IsValidClient(client) && !IsFakeClient(client))
+            if (IsValidClient(client))
             {
                 PrintToChat(client," \x10%s \x02Invalid Drop Items",s_tag_plugin);
             }
@@ -248,7 +248,7 @@ void UpdateDropItems(HTTPResponse response, int client)
     if(client==0){
         PrintToServer("%s Drop Items Updated",s_tag_plugin);
     }else{
-        if (IsClientConnected(client) && IsValidClient(client) && !IsFakeClient(client))
+        if (IsValidClient(client))
         {
                 PrintToChat(client," \x10%s \x04Drop Items Updated",s_tag_plugin);
         }
@@ -273,7 +273,7 @@ void DropPrice(HTTPResponse response, ArrayList DataArray)
 } 
 
 void SentDropWebhook(int client, char[] item_name,char[] image_url, char[] drop_info, char[] item_price = "-"){
-    if (IsClientConnected(client) && IsValidClient(client) && !IsFakeClient(client))
+    if (IsValidClient(client))
     {
         char s_hex_char[]="0123456789ABCDEF\0",s_color[8],s_footer[64],s_steam_id[32],s_username[(MAX_NAME_LENGTH + 1) * 2],s_steam_URL[256],s_hostname[256],s_price_url[256];
         if (!StrEqual(item_price, "-")){
@@ -383,14 +383,10 @@ Action DropFailed(Handle hTimer)
 	PrintToChatAll(" \x10%s \x02Drop Attempt Failed :(", s_tag_plugin);
 }
 
-stock bool IsValidClient(int client)
+bool IsValidClient(int client, bool nobots = true)
 {
-	if(client > 0 && client <= MaxClients)
-	{
-		if(IsClientInGame(client))
-			return true;
-	}
-	return false;
+	if (client <= 0 || client > MaxClients || !IsClientConnected(client) || (nobots && IsFakeClient(client)))return false;
+	return IsClientInGame(client);
 }
 
 /*                                                     __                __   .__                                                        
