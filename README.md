@@ -41,4 +41,5 @@ Drop ögelerini güncellemek için kullanılır.
 | sm_wait_timer_advenced_drop | 182 | How many seconds should a drop attempt be made? (3Do not do less than 3 minutes, ideal is 10 minutes) | Kaç saniye düşme denemesi yapılmalıdır? (3 dakikadan az yapmayın, ideali 10 dakikadır) |
 | sm_chat_info_advenced_drop | 1 | Show drop attempts in chat? | Drop denemeleri sohbette gösterilsin mi? |
 | sm_sound_status_advenced_drop | 2 | Play a sound when the drop drops? [0 - no _ 1 - just drop it _ 2 - to everyone] | Drop düştüğünde bir ses çalınsın mı? [0 - hayır _ 1 - sadece drop düşene _ 2 - herkese] |
+| sm_active_info_advanced_drop | 1 | Every time the map changes, send the drop active information to the discord server? | Harita her değiştiğinde, drop aktif bilgisi discord sunucusuna gönderilsin mi? |
 
