@@ -12,12 +12,12 @@ public Plugin myinfo =
 	name = "Advanced Drop", 
 	author = "oppa & (DropsSummoner: Phoenix)", 
 	description = "Attempts to drop drops for the duration of the map. It sends the falling drops to the discord server in an advanced way.", 
-	version = "1.0", 
+	version = "1.1", 
 	url = "csgo-turkiye.com"
 };
 
 char s_drop_items[ PLATFORM_MAX_PATH ],s_log_file[ PLATFORM_MAX_PATH ], s_tag_plugin[ 64 ], s_webhook_URL[ 256 ];
-ConVar g_webhook = null, g_tag = null, g_price = null, g_wait_timer = null, g_chat_info = null, g_play_sound_status = null;
+ConVar g_webhook = null, g_tag = null, g_price = null, g_wait_timer = null, g_chat_info = null, g_play_sound_status = null, g_active_info = null;
 Handle h_match_end_drops = null, h_wait_timer = null;
 int i_OS = -1;
 Address a_drop_for_all_players_patch = Address_Null;
@@ -31,6 +31,7 @@ public void OnPluginStart()
     g_wait_timer = CreateConVar("sm_wait_timer_advanced_drop", "182", "How many seconds should a drop attempt be made? (Do not do less than 3 minutes, ideal is 10 minutes)", _, true, 60.0);
     g_chat_info = CreateConVar("sm_chat_info_advanced_drop", "1", "Show drop attempts in chat?", _, true, 0.0, true, 1.0);
     g_play_sound_status = CreateConVar("sm_sound_status_advanced_drop", "2", "Play a sound when the drop drops? [0 - no | 1 - just drop it | 2 - to everyone]", _, true, 0.0, true, 2.0);
+    g_active_info = CreateConVar("sm_active_info_advanced_drop", "1", "Every time the map changes, send the drop active information to the discord server?", _, true, 0.0, true, 1.0);
     AutoExecConfig(true, "advanced_drop","CSGO_Turkiye");
     RegAdminCmd("sm_updatedropitems", CommandDropItemUpdate, ADMFLAG_ROOT);
     GameData h_game_data = LoadGameConfigFile("advanced_drop.games");
@@ -109,14 +110,17 @@ public void OnMapStart()
     UpdateDropItemList(0);
     PrecacheSound("ui/panorama/case_awarded_1_uncommon_01.wav");
     CreateTimer(g_wait_timer.FloatValue, TryDropping, _, TIMER_REPEAT|TIMER_FLAG_NO_MAPCHANGE);
-    char s_map_name[256],s_hostname[256],s_content[512];
-    GetConVarString(FindConVar("hostname"), s_hostname,sizeof(s_hostname));
-    GetCurrentMap(s_map_name, sizeof(s_map_name));
-    Format(s_content,sizeof(s_content),"**%s** Drop Active.\n> **Hostname >>** `%s`\n> **Map Name >>** `%s`", s_tag_plugin,s_hostname, s_map_name);
-    DiscordWebHook dw_hook = new DiscordWebHook(s_webhook_URL);
-    dw_hook.SetContent(s_content);
-    dw_hook.Send();
-    delete dw_hook;
+    if(g_active_info.BoolValue)
+	{
+        char s_map_name[256],s_hostname[256],s_content[512];
+        GetConVarString(FindConVar("hostname"), s_hostname,sizeof(s_hostname));
+        GetCurrentMap(s_map_name, sizeof(s_map_name));
+        Format(s_content,sizeof(s_content),"**%s** Drop Active.\n> **Hostname >>** `%s`\n> **Map Name >>** `%s`", s_tag_plugin,s_hostname, s_map_name);
+        DiscordWebHook dw_hook = new DiscordWebHook(s_webhook_URL);
+        dw_hook.SetContent(s_content);
+        dw_hook.Send();
+        delete dw_hook;
+    }
 }
 
 public Action CommandDropItemUpdate(int client, int args)
@@ -276,7 +280,7 @@ void SentDropWebhook(int client, char[] item_name,char[] image_url, char[] drop_
     if (IsValidClient(client))
     {
         char s_hex_char[]="0123456789ABCDEF\0",s_color[8],s_footer[64],s_steam_id[32],s_username[(MAX_NAME_LENGTH + 1) * 2],s_steam_URL[256],s_hostname[256],s_price_url[256];
-        if (!StrEqual(item_price, "-")){
+        if (!StrEqual(item_name, "UNKNOW")){
             UrlEncodeString(s_price_url, sizeof(s_price_url), item_name);
             ReplaceString(s_price_url, sizeof(s_price_url), "+", "%20");
             Format(s_price_url, sizeof(s_price_url),"[%s](https://steamcommunity.com/market/listings/730/%s)",item_price,s_price_url);
