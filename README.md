@@ -13,11 +13,11 @@ In the game "Counter-Strike: Global Offensive", it allows the drop to drop befor
 
 **[TR]**
 
-"Counter-Strike: Global Offensive" oyununda harita süresi bitmeden drop düşmesini sağlar. Düşen dropları bildirim olarak discord sunucunuza atar. Düşen bir ögenin fiyat tipi cvar üzerinden belirlenerek anlık fiyatını bulur. Drop ögeleri komut ile veya her harita başlangıcında otomatik olarak güncellenir. Steam Api üzerinden sağlanan verileri aşağıda belirtilen sitede basit şekilde "json" ve "vdf" formatına çevrilmiş olarak bulabilirsiniz. Web sitesinden çekme durumunda hata olması durumunda "csgo/addons/sourcemod/configs/CSGO-Turkiye_com/dropitems.cfg" dosyasına manuel olarak düzenleyebilirsiniz. Çge isimlerini değiştirirseniniz market fiyatında hata verecektir. "csgo/addons/sourcemod/logs/advanced_drop.log" klasöründe tümkayıtları bulabilirsiniz.
+"Counter-Strike: Global Offensive" oyununda harita süresi bitmeden drop düşmesini sağlar. Düşen dropları bildirim olarak discord sunucunuza atar. Düşen bir ögenin fiyat tipi cvar üzerinden belirlenerek anlık fiyatını bulur. Drop ögeleri komut ile veya her harita başlangıcında otomatik olarak güncellenir. Steam Api üzerinden sağlanan verileri aşağıda belirtilen sitede basit şekilde "json" ve "vdf" formatına çevrilmiş olarak bulabilirsiniz. Web sitesinden çekme durumunda hata olması durumunda "csgo/addons/sourcemod/configs/CSGO-Turkiye_com/dropitems.cfg" dosyasına manuel olarak düzenleyebilirsiniz. Çge isimlerini değiştirirseniniz market fiyatında hata verecektir. "csgo/addons/sourcemod/logs/advanced_drop.log" klasöründe tümkayıtları bulabilirsiniz. 
 
-**JSON:** https://csgo-turkiye.com/api/csgo-items?format=json
+**JSON:** https://csgo-turkiye.com/api/csgo-items?format=json&language=en
 
-**VDF:** https://csgo-turkiye.com/api/csgo-items?format=vdf or https://csgo-turkiye.com/api/csgo-items
+**VDF:** https://csgo-turkiye.com/api/csgo-items?format=vdf&language=en
 
 # Commands (Komutlar)
 
@@ -31,6 +31,16 @@ Used to update drop items.
 
 Drop ögelerini güncellemek için kullanılır.
 
+-  sm_updatedropallitems (ROOT)
+
+**[EN]**
+
+Used to update drop items. Unlike the "sm_updatedropitems" command, it creates the file from scratch. Required after changing the language system.
+
+**[TR]**
+
+Drop ögelerini güncellemek için kullanılır. "sm_updatedropitems" komutundan farklı olarak dosyayı sıfırdan oluşturur. Dil sistemini değiştirdikten sonra gereklidir.
+
 # Settings (Ayarlar) [ cvar => csgo/cfg/CSGO_Turkiye/advanced-drop.cfg ]
 
 | cvar          | Default       | EN            | TR            |
@@ -38,6 +48,7 @@ Drop ögelerini güncellemek için kullanılır.
 | sm_webhook_advenced_drop | https://discord.com/api/webhooks/xxxxx/xxxxxxx | Advanced Drop Webhook URL | Webhook URL |
 | sm_tag_advenced_drop | [ csgo-turkiye.com Advanced Drop ] | Advanced Drop Plugin Tag | Eklenti Tagı |
 | sm_price_advenced_drop | 1 (1:$ - 2:£ - 3:€ - 4:CHF - 5:pуб. - 6:zł - 7:R$ - 8:¥ - 9:kr - 10:Rp - 11:RM - 12:P - 13:S$ - 14:฿ - 15:₫ - 16:₩ - 17:TL - 18:₴ - 19:Mex$ - 20:CDN$ - 21:A$ - 22:NZ$ - 23:¥ - 24:₹ - 25:CLP$ - 26:S/. - 27:COL$ - 28:R - 29:HK$ - 30:NT$ - 31:SR - 32:AED - 34:ARS$ - 35:₪ - 37:₸ - 38:KD - 39:QR - 40:₡ - 41:$U) | Advanced Drop Item Price | Para Birimi |
+| sm_language_advanced_drop | en | Advanced Drop Item Name Language | Drop İsimleri Dili |
 | sm_wait_timer_advenced_drop | 182 | How many seconds should a drop attempt be made? (3Do not do less than 3 minutes, ideal is 10 minutes) | Kaç saniye düşme denemesi yapılmalıdır? (3 dakikadan az yapmayın, ideali 10 dakikadır) |
 | sm_chat_info_advenced_drop | 1 | Show drop attempts in chat? | Drop denemeleri sohbette gösterilsin mi? |
 | sm_sound_status_advenced_drop | 2 | Play a sound when the drop drops? [0 - no _ 1 - just drop it _ 2 - to everyone] | Drop düştüğünde bir ses çalınsın mı? [0 - hayır _ 1 - sadece drop düşene _ 2 - herkese] |
