@@ -1,0 +1,212 @@
+"Phrases"
+{
+	"Failed to Update Drop Items Console"
+	{
+		"#format" 		"{1:s}"
+		"en"			"{1} Failed to Retrieve Data from Drop Update Site."
+		"tr"			"{1} Drop Güncelleme Sitesinden Veri Alınamadı."
+	}
+    
+	"Failed to Update Drop Items Client"
+	{
+		"#format" 		"{1:s}"
+		"en"			"{orange}{1} {darkred}Failed to Retrieve Data from Drop Update Site."
+		"tr"			"{orange}{1} {darkred}Drop Güncelleme Sitesinden Veri Alınamadı."
+	}
+	
+	"Invalid Drop Items Console"
+	{
+		"#format" 		"{1:s}"
+		"en"			"{1} Invalid Drop Items."
+		"tr"			"{1} Drop Ögeleri Geçersiz."
+	}
+    
+	"Invalid Drop Items Client"
+	{
+		"#format" 		"{1:s}"
+		"en"			"{orange}{1} {darkred}Invalid Drop Items."
+		"tr"			"{orange}{1} {darkred}Drop Ögeleri Geçersiz."
+	} 
+
+	"Add Drop New Item"
+	{
+		"#format" 		"{1:s}{2:s}{3:s}"
+		"en"			"{1} Add Drop New Item ★ [{2}] {3}"
+		"tr"			"{1} Yeni Drop Ögesi ★ [{2}] {3}"
+	}
+
+	"Drop Items Updated Console"
+	{
+		"#format" 		"{1:s}"
+		"en"			"{1} Drop Items Updated."
+		"tr"			"{1} Drop Ögeleri Güncellendi."
+	}
+    
+	"Drop Items Updated Client"
+	{
+		"#format" 		"{1:s}"
+		"en"			"{orange}{1} {green}Drop Items Updated."
+		"tr"			"{orange}{1} {green}Drop Ögeleri Güncellendi."
+	}
+
+	"GameData Error"
+	{
+		"#format" 		"{1:s}"
+		"en"			"{1} Failed to load drop game data."
+		"tr"			"{1} Drop oyun verileri yüklenemedi."
+	}
+
+	"OS Error"
+	{
+		"#format" 		"{1:s}"
+		"en"			"{1} Failed to get OS offset."
+		"tr"			"{1} İşletim sistemi ofseti alınamadı."
+	}
+
+	"RewardMatchEndDrops Error"
+	{
+		"#format" 		"{1:s}"
+		"en"			"{1} Failed to create SDKCall for CCSGameRules::RewardMatchEndDrops."
+		"tr"			"{1} CCSGameRules::RewardMatchEndDrops için SDKCall oluşturulamadı."
+	}
+
+	"RecordPlayerItemDrop Error"
+	{
+		"#format" 		"{1:s}"
+		"en"			"{1} Could not set service path for CCSGameRules::RecordPlayerItemDrop."
+		"tr"			"{1} CCSGameRules::RewardMatchEndDrops için SDKCall oluşturulamadı."
+	}
+
+	"RecordPlayerItemDrop Error 2"
+	{
+		"#format" 		"{1:s}"
+		"en"			"{1} Deviation for CCSGameRules::RecordPlayerItemDrop failed."
+		"tr"			"{1} CCSGameRules::RecordPlayerItemDrop için sapma başarısız oldu."
+	}
+
+	"DropForAllPlayersPatch Error"
+	{
+		"#format" 		"{1:s}"
+		"en"			"{1} Not as we expected at DropForAllPlayersPatch, drop will not be available for all players."
+		"tr"			"{1} DropForAllPlayersPatch beklediğimiz gibi değil, drop tüm oyuncular için geçerli olmayacak."
+	}
+
+	"DropForAllPlayersPatch Error 2"
+	{
+		"#format" 		"{1:s}"
+		"en"			"{1} Failed to get DropForAllPlayersPatch address, drop will not be available for all players."
+		"tr"			"{1} DropForAllPlayersPatch adresi alınamadı, drop tüm oyuncular için geçerli olmayacak."
+	}
+
+	"Drop Active"
+	{
+		"#format" 		"{1:s}{2:s}{3:s}"
+		"en"			"**{1}** Drop Active.\n> **Hostname ★** `{2}`\n> **Map Name ★** `{3}`"
+		"tr"			"**{1}** Drop Aktif.\n> **Sunucu Adı ★** `{2}`\n> **Harita Adı ★** `{3}`"
+	}
+
+	"Drop ShowHudText"
+	{
+		"#format" 		"{1:s}"
+		"en"			"[ {1} ] You dropped a drop! Check your inventory."
+		"tr"			"[ {1} ] Drop düştü! Envanterini kontrol et."
+	}
+
+	"Unknow Drop"
+	{
+		"en"			"NOT FOUND INFORMATION ABOUT DROP ITEM"
+		"tr"			"DROP BİLGİSİ BULUNAMADI"
+	}
+
+	"Embed SetTitle" /*Put "-" in the first character to not send this field.*/
+	{
+		"en"			"A Player Dropped"
+		"tr"			"Bir Oyuncuya Drop Düştü"
+	}
+
+	"Embed Field Hostname Title" /*Put "-" in the first character to not send this field.*/
+	{
+		"en"			"Hostname"
+		"tr"			"Sunucu Adı"
+	}
+
+	"Embed Field Hostname Content"
+	{
+		"#format" 		"{1:s}{2:s}{3:d}"
+		"en"			"{1} ★{2}:{3}★"
+		"tr"			"{1} ★{2}:{3}★"
+	}
+
+	"Embed Field Player Info Title" /*Put "-" in the first character to not send this field.*/
+	{
+		"en"			"Player"
+		"tr"			"Oyuncu"
+	}
+
+	"Embed Field Player Info Content"
+	{
+		"#format" 		"{1:s}{2:s}{3:s}"
+		"en"			"{1} [★{2}★](http://steamcommunity.com/profiles/{3})"
+		"tr"			"{1} [★{2}★](http://steamcommunity.com/profiles/{3})"
+	}
+
+	"Embed Field Drop Info Title" /*Put "-" in the first character to not send this field.*/
+	{
+		"en"			"Drop Info [Def Index - Paint Index - Rarity - Quality]"
+		"tr"			"Drop Bilgisi [Def Index - Paint Index - Rarity - Quality]"
+	}
+
+	"Embed Field Drop Info Content"
+	{
+		"#format" 		"{1:s}{2:s}"
+		"en"			"★{1}★ {2}"
+		"tr"			"★{1}★ {2}"
+	}
+
+	"Embed Field Item Info Title" /*Put "-" in the first character to not send this field.*/
+	{
+		"en"			"Item"
+		"tr"			"Drop"
+	}
+
+	"Embed Field Price Info Title" /*Put "-" in the first character to not send this field.*/
+	{
+		"en"			"Price"
+		"tr"			"Fiyat"
+	}
+
+	"Embed Footer" /*Put "-" in the first character to not send this field.*/
+	{
+		"#format" 		"{1:s}{2:s}"
+		"en"			"{1} • {2}"
+		"tr"			"{1} • {2}"
+	}
+
+	"Drop Log"
+	{
+		"#format" 		"{1:L}{2:s}{3:s}{4:s}"
+		"en"			"{1} dropped this: {2} {3} | Price: {4}"
+		"tr"			"{1} şunu düşürdü: {2} {3} | Fiyat: {4}"
+	}
+
+	"Drop Log Chat"
+	{
+		"#format" 		"{1:s}{2:N}{3:s}{4:s}{5:s}"
+		"en"			"{orange}{1} {green}Player {darkblue}{2} {green}dropped this: {blue}{3} {purple}{4} {green}| Price: {orchid}{5}"
+		"tr"			"{orange}{1} {green}Oyuncu {darkblue}{2} {green}şunu düşürdü: {blue}{3} {purple}{4} {green}| Fiyat: {orchid}{5}"
+	}
+
+	"Trying Drop"
+	{
+		"#format" 		"{1:s}"
+		"en"			"{orange}{1} {darkblue}Trying Drop..."
+		"tr"			"{orange}{1} {darkblue}Drop Düşürülüyor..."
+	}
+
+	"Drop Attempt Failed"
+	{
+		"#format" 		"{1:s}"
+		"en"			"{orange}{1} {darkred}Drop Attempt Failed :("
+		"tr"			"{orange}{1} {darkred}Kimseye Drop Düşmedi :("
+	}
+}
