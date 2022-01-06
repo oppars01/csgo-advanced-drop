@@ -17,12 +17,12 @@ public Plugin myinfo =
 	url = "csgo-turkiye.com"
 };
 
-char s_drop_items[ PLATFORM_MAX_PATH ],s_log_file[ PLATFORM_MAX_PATH ], s_tag_plugin[ 64 ], s_webhook_URL[ 256 ], s_language[8];
-ConVar g_webhook = null, g_tag = null, g_price = null, g_wait_timer = null, g_chat_info = null, g_play_sound_status = null, g_active_info = null, g_language = null;
+char s_drop_items[ PLATFORM_MAX_PATH ],s_log_file[ PLATFORM_MAX_PATH ], s_tag_plugin[ 64 ], s_webhook_URL[ 256 ], s_language[8], s_prime_api_key[ 32 ];
+ConVar g_webhook = null, g_tag = null, g_price = null, g_wait_timer = null, g_chat_info = null, g_play_sound_status = null, g_active_info = null, g_language = null, g_prime_api_key = null;
 Handle h_match_end_drops = null, h_wait_timer = null;
 int i_OS = -1, i_price, i_play_sound_status;
 float f_wait_timer;
-bool b_chat_info, b_active_info;
+bool b_chat_info, b_active_info, b_client_prime_status [ MAXPLAYERS+1 ] = {false , ...};
 Address a_drop_for_all_players_patch = Address_Null;
 
 public void OnPluginStart()
@@ -87,6 +87,7 @@ public void OnPluginStart()
 	}
     delete h_game_data;
     BuildPath(Path_SM, s_log_file, sizeof( s_log_file ), "logs/advanced_drop.log");
+    for (int i = 1; i <= MaxClients; i++)if (IsValidClient(i)) ClientPrimeStatus(i);
 }
 
 public void OnPluginEnd()
@@ -115,6 +116,11 @@ public void OnMapStart()
     }
 }
 
+public void OnClientPostAdminCheck(int client)
+{
+	ClientPrimeStatus(client);
+}
+
 void CVAR_Load(){
     g_webhook = CreateConVar( "sm_webhook_advanced_drop", "https://discord.com/api/webhooks/xxxxx/xxxxxxx", "Advanced Drop Webhook URL" );
     g_tag = CreateConVar( "sm_tag_advanced_drop", "[ csgo-turkiye.com Advanced Drop ]", "Advanced Drop Plugin Tag" );
@@ -125,6 +131,7 @@ void CVAR_Load(){
     g_chat_info = CreateConVar("sm_chat_info_advanced_drop", "1", "Show drop attempts in chat?", _, true, 0.0, true, 1.0);
     g_play_sound_status = CreateConVar("sm_sound_status_advanced_drop", "2", "Play a sound when the drop drops? [0 - no | 1 - just drop it | 2 - to everyone]", _, true, 0.0, true, 2.0);
     g_active_info = CreateConVar("sm_active_info_advanced_drop", "1", "Every time the map changes, send the drop active information to the discord server?", _, true, 0.0, true, 1.0);
+    g_prime_api_key = CreateConVar( "sm_prime_api_key_advanced_drop", "XXXXX-XXXXX-XXXXX-XXXXX", "prime.napas.cc - Web API authentication key." );
     AutoExecConfig(true, "advanced_drop","CSGO_Turkiye");
     GetConVarString(g_webhook, s_webhook_URL, sizeof(s_webhook_URL));
     GetConVarString(g_tag, s_tag_plugin, sizeof(s_tag_plugin));
@@ -142,6 +149,7 @@ void CVAR_Load(){
     HookConVarChange(g_chat_info, OnCvarChanged);
     HookConVarChange(g_play_sound_status, OnCvarChanged);
     HookConVarChange(g_active_info, OnCvarChanged);
+    HookConVarChange(g_prime_api_key, OnCvarChanged);
 }
 
 public int OnCvarChanged(Handle convar, const char[] oldVal, const char[] newVal)
@@ -149,6 +157,7 @@ public int OnCvarChanged(Handle convar, const char[] oldVal, const char[] newVal
     if(convar == g_webhook) strcopy(s_webhook_URL, sizeof(s_webhook_URL), newVal);
     else if(convar == g_tag) strcopy(s_tag_plugin, sizeof(s_tag_plugin), newVal);
     else if(convar == g_language) strcopy(s_language, sizeof(s_language), newVal);
+    else if(convar == g_prime_api_key) strcopy(s_prime_api_key, sizeof(s_prime_api_key), newVal);
     else if(convar == g_price) i_price = GetConVarInt(convar);
     else if(convar == g_wait_timer) f_wait_timer = GetConVarFloat(convar);
     else if(convar == g_chat_info) b_chat_info = GetConVarBool(convar);
@@ -178,7 +187,7 @@ MRESReturn Detour_RecordPlayerItemDrop(DHookParam hParams)
 	}
 	int i_account_ID = hParams.GetObjectVar(1, 16, ObjectValueType_Int);
 	int client = GetClientFromAccountID(i_account_ID);
-	if(client != -1)
+	if(client != -1 && b_client_prime_status[ client ])
 	{	
         int i_def_index = hParams.GetObjectVar(1, 20, ObjectValueType_Int);
         int i_paint_index = hParams.GetObjectVar(1, 24, ObjectValueType_Int);
@@ -469,6 +478,65 @@ Action DropFailed(Handle hTimer)
 {
     h_wait_timer = null;
     CPrintToChatAll("%t", "Drop Attempt Failed", s_tag_plugin);
+}
+
+void ClientPrimeStatus(int client){
+    b_client_prime_status[ client ] = false;
+    if (IsValidClient(client)){
+        if (SteamWorks_HasLicenseForApp(client, 624820) == k_EUserHasLicenseResultHasLicense){
+            b_client_prime_status[ client ] = true;
+            PrintToServer("%t", "Client Prime", s_tag_plugin, client);
+        }else
+        {
+            char s_account_id[24];
+            Handle h_request = SteamWorks_CreateHTTPRequest(k_EHTTPMethodGET, "https://prime.napas.cc/request");
+            SteamWorks_SetHTTPRequestNetworkActivityTimeout(h_request, 10);
+            IntToString(GetSteamAccountID(client), s_account_id, sizeof(s_account_id));
+            SteamWorks_SetHTTPRequestGetOrPostParameter(h_request, "key", 		s_prime_api_key);
+            SteamWorks_SetHTTPRequestGetOrPostParameter(h_request, "accountid", s_account_id);
+            SteamWorks_SetHTTPCallbacks(h_request, HTTPRequestComplete);
+            SteamWorks_SetHTTPRequestContextValue(h_request, client);
+            SteamWorks_SendHTTPRequest(h_request);
+        }
+    }
+}
+
+void HTTPRequestComplete(Handle hRequest, bool bFailure, bool bRequestSuccessful, EHTTPStatusCode eStatusCode, int client){
+	delete hRequest;
+	if(IsValidClient(client)){
+		if(bFailure){
+                PrintToServer("%t", "Failed to Prime Control", s_tag_plugin, client);
+                CreateTimer(15.0, TIMER_DELAY, client, TIMER_FLAG_NO_MAPCHANGE);
+		}else{
+            switch(eStatusCode){
+			case k_EHTTPStatusCode200OK:{
+                b_client_prime_status[client] = true;
+                PrintToServer("%t", "Client Prime", s_tag_plugin, client);
+            }
+            case k_EHTTPStatusCode204NoContent:{
+                b_client_prime_status[client] = false;
+                PrintToServer("%t", "Client NoPrime", s_tag_plugin, client);
+            }
+			case k_EHTTPStatusCode400BadRequest:{
+                PrintToServer("%t", "Prime Api Invalid Request", s_tag_plugin, client);
+			}
+			case k_EHTTPStatusCode403Forbidden:{
+				PrintToServer("%t", "Prime Api Invalid Api Key", s_tag_plugin, client);
+			}
+			case k_EHTTPStatusCode503ServiceUnavailable:{
+                PrintToServer("%t", "Prime Api Try", s_tag_plugin, client);
+                CreateTimer(15.0, TIMER_DELAY, client, TIMER_FLAG_NO_MAPCHANGE);
+			}
+		}
+        }
+		
+	}
+}
+
+Action TIMER_DELAY(Handle hTimer, int client){
+	if(IsValidClient(client)){
+        ClientPrimeStatus(client);
+    }
 }
 
 bool IsValidClient(int client, bool nobots = true)
