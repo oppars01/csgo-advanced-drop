@@ -209,4 +209,46 @@
 		"en"			"{orange}{1} {darkred}Drop Attempt Failed :("
 		"tr"			"{orange}{1} {darkred}Kimseye Drop Düşmedi :("
 	}
+
+	"Failed to Prime Control"
+	{
+		"#format" 		"{1:s}{2:N}"
+		"en"			"{1} Player: {2} Failed to Prime Status data from 'prime.napas.cc'. A retry will be made after 15 seconds."
+		"tr"			"{1} Oyuncu: {2} 'prime.napas.cc' sitesinden Oyuncu Prime kontrolü yapılamadı. 15 saniye sonra tekrar deneme yapılacak."
+	}
+
+	"Prime Api Invalid Request"
+	{
+		"#format" 		"{1:s}{2:N}"
+		"en"			"{1} Player: {2} - Prime Api invalid request."
+		"tr"			"{1} Oyuncu: {2} - Prime Api geçersiz istek."
+	}
+
+	"Prime Api Invalid Api Key"
+	{
+		"#format" 		"{1:s}{2:N}"
+		"en"			"{1} Player: {2} - Prime Api Invalid Api Key"
+		"tr"			"{1} Oyuncu: {2} - Prime Konrol Geçersiz Api Anahtarı"
+	}
+
+	"Client Prime"
+	{
+		"#format" 		"{1:s}{2:N}"
+		"en"			"{1} Player: {2} - Account status is Prime."
+		"tr"			"{1} Oyuncu: {2} - Hesap durumu Prime."
+	}
+
+	"Client NoPrime"
+	{
+		"#format" 		"{1:s}{2:N}"
+		"en"			"{1} Player: {2} - Account status is NoPrime."
+		"tr"			"{1} Oyuncu: {2} - Hesap durumu Prime Değil."
+	}
+
+	"Prime Api Try"
+	{
+		"#format" 		"{1:s}{2:N}"
+		"en"			"{1} Player: {2} - Account status is NoPrime. A retry will be made after 15 seconds."
+		"tr"			"{1} Oyuncu: {2} - Hesap durumu için 15 saniye sonra tekrara deneme yapılacak."
+	}
 }
