@@ -122,7 +122,6 @@ void CVAR_Load(){
     g_webhook = CreateConVar( "sm_webhook_advanced_drop", "https://discord.com/api/webhooks/xxxxx/xxxxxxx", "Advanced Drop Webhook URL" );
     g_tag = CreateConVar( "sm_tag_advanced_drop", "[ csgo-turkiye.com Advanced Drop ]", "Advanced Drop Plugin Tag" );
     g_price = CreateConVar( "sm_price_advanced_drop", "1", "Advanced Drop Item Currency" );
-    g_active_info = CreateConVar("sm_active_info_advanced_drop", "1", "Every time the map changes, send the drop active information to the discord server?", _, true, 0.0, true, 1.0);
     g_wait_timer = CreateConVar("sm_wait_timer_advanced_drop", "182", "How many seconds should a drop attempt be made? (Do not do less than 3 minutes, ideal is 10 minutes)", _, true, 60.0);
     g_chat_info = CreateConVar("sm_chat_info_advanced_drop", "1", "Show drop attempts in chat?", _, true, 0.0, true, 1.0);
     g_play_sound_status = CreateConVar("sm_sound_status_advanced_drop", "2", "Play a sound when the drop drops? [0 - no | 1 - just drop it | 2 - to everyone]", _, true, 0.0, true, 2.0);
