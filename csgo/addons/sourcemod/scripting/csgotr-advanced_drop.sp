@@ -130,7 +130,6 @@ void CVAR_Load(){
     g_wait_timer = CreateConVar("sm_wait_timer_advanced_drop", "182", "How many seconds should a drop attempt be made? (Do not do less than 3 minutes, ideal is 10 minutes)", _, true, 60.0);
     g_chat_info = CreateConVar("sm_chat_info_advanced_drop", "1", "Show drop attempts in chat?", _, true, 0.0, true, 1.0);
     g_play_sound_status = CreateConVar("sm_sound_status_advanced_drop", "2", "Play a sound when the drop drops? [0 - no | 1 - just drop it | 2 - to everyone]", _, true, 0.0, true, 2.0);
-    g_active_info = CreateConVar("sm_active_info_advanced_drop", "1", "Every time the map changes, send the drop active information to the discord server?", _, true, 0.0, true, 1.0);
     g_prime_api_key = CreateConVar( "sm_prime_api_key_advanced_drop", "XXXXX-XXXXX-XXXXX-XXXXX", "prime.napas.cc - Web API authentication key." );
     AutoExecConfig(true, "advanced_drop","CSGO_Turkiye");
     GetConVarString(g_webhook, s_webhook_URL, sizeof(s_webhook_URL));
@@ -217,6 +216,7 @@ MRESReturn Detour_RecordPlayerItemDrop(DHookParam hParams)
             DataArray.PushString(s_drop_info);
             char s_price_url[256];
             UrlEncodeString(s_item_name, sizeof(s_item_name), s_item_name);
+            ReplaceString(s_item_name, sizeof(s_item_name), "&", "%26");
             Format(s_price_url,sizeof(s_price_url),"market/priceoverview/?appid=730&currency=%d&market_hash_name=%s",i_price,s_item_name);
             HTTPClient hc_request = new HTTPClient("https://steamcommunity.com");
             hc_request.Get(s_price_url, DropPrice ,DataArray);
@@ -547,17 +547,13 @@ bool IsValidClient(int client, bool nobots = true)
 }
 
 
-/*                                                     __                __   .__                                                        
-               ____   ______ ____   ____           _/  |_ __ _________|  | _|__|___.__. ____       ____  ____   _____                  
-             _/ ___\ /  ___// ___\ /  _ \   ______ \   __\  |  \_  __ \  |/ /  <   |  |/ __ \    _/ ___\/  _ \ /     \                 
-             \  \___ \___ \/ /_/  >  <_> ) /_____/  |  | |  |  /|  | \/    <|  |\___  \  ___/    \  \__(  <_> )  Y Y  \                
-              \___  >____  >___  / \____/           |__| |____/ |__|  |__|_ \__|/ ____|\___  > /\ \___  >____/|__|_|  /                
-                  \/     \/_____/                                          \/   \/         \/  \/     \/            \/                 
-________________________________              _____       .___                                     .___ ________                       
-\______   \__    ___/\_   _____/             /  _  \    __| _/__  _______    ____   ____  ____   __| _/ \______ \_______  ____ ______  
- |       _/ |    |    |    __)_    ______   /  /_\  \  / __ |\  \/ /\__  \  /    \_/ ___\/ __ \ / __ |   |    |  \_  __ \/  _ \\____ \ 
- |    |   \ |    |    |        \  /_____/  /    |    \/ /_/ | \   /  / __ \|   |  \  \__\  ___// /_/ |   |    `   \  | \(  <_> )  |_> >
- |____|_  / |____|   /_______  /           \____|__  /\____ |  \_/  (____  /___|  /\___  >___  >____ |  /_______  /__|   \____/|   __/ 
-        \/                   \/                    \/      \/            \/     \/     \/    \/     \/          \/             |__|    
+/*
+
+░█████╗░░██████╗░██████╗░░█████╗░░░░░░░████████╗██╗░░░██╗██████╗░██╗░░██╗██╗██╗░░░██╗███████╗░░░░█████╗░░█████╗░███╗░░░███╗
+██╔══██╗██╔════╝██╔════╝░██╔══██╗░░░░░░╚══██╔══╝██║░░░██║██╔══██╗██║░██╔╝██║╚██╗░██╔╝██╔════╝░░░██╔══██╗██╔══██╗████╗░████║
+██║░░╚═╝╚█████╗░██║░░██╗░██║░░██║█████╗░░░██║░░░██║░░░██║██████╔╝█████═╝░██║░╚████╔╝░█████╗░░░░░██║░░╚═╝██║░░██║██╔████╔██║
+██║░░██╗░╚═══██╗██║░░╚██╗██║░░██║╚════╝░░░██║░░░██║░░░██║██╔══██╗██╔═██╗░██║░░╚██╔╝░░██╔══╝░░░░░██║░░██╗██║░░██║██║╚██╔╝██║
+╚█████╔╝██████╔╝╚██████╔╝╚█████╔╝░░░░░░░░░██║░░░╚██████╔╝██║░░██║██║░╚██╗██║░░░██║░░░███████╗██╗╚█████╔╝╚█████╔╝██║░╚═╝░██║
+░╚════╝░╚═════╝░░╚═════╝░░╚════╝░░░░░░░░░░╚═╝░░░░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░░╚═╝░░░╚══════╝╚═╝░╚════╝░░╚════╝░╚═╝░░░░░╚═╝
 
 */
