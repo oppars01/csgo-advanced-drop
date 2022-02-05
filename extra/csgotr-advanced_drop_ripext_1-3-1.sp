@@ -130,7 +130,6 @@ void CVAR_Load(){
     g_wait_timer = CreateConVar("sm_wait_timer_advanced_drop", "182", "How many seconds should a drop attempt be made? (Do not do less than 3 minutes, ideal is 10 minutes)", _, true, 60.0);
     g_chat_info = CreateConVar("sm_chat_info_advanced_drop", "1", "Show drop attempts in chat?", _, true, 0.0, true, 1.0);
     g_play_sound_status = CreateConVar("sm_sound_status_advanced_drop", "2", "Play a sound when the drop drops? [0 - no | 1 - just drop it | 2 - to everyone]", _, true, 0.0, true, 2.0);
-    g_active_info = CreateConVar("sm_active_info_advanced_drop", "1", "Every time the map changes, send the drop active information to the discord server?", _, true, 0.0, true, 1.0);
     g_prime_api_key = CreateConVar( "sm_prime_api_key_advanced_drop", "XXXXX-XXXXX-XXXXX-XXXXX", "prime.napas.cc - Web API authentication key." );
     AutoExecConfig(true, "advanced_drop","CSGO_Turkiye");
     GetConVarString(g_webhook, s_webhook_URL, sizeof(s_webhook_URL));
@@ -217,6 +216,7 @@ MRESReturn Detour_RecordPlayerItemDrop(DHookParam hParams)
             DataArray.PushString(s_drop_info);
             char s_price_url[256];
             UrlEncodeString(s_item_name, sizeof(s_item_name), s_item_name);
+            ReplaceString(s_item_name, sizeof(s_item_name), "&", "%26");
             Format(s_price_url,sizeof(s_price_url),"https://steamcommunity.com/market/priceoverview/?appid=730&currency=%d&market_hash_name=%s",i_price,s_item_name);
             HTTPRequest  hc_request = new HTTPRequest (s_price_url);
             hc_request.Get( DropPrice ,DataArray);
