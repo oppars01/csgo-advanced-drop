@@ -194,9 +194,8 @@ MRESReturn Detour_RecordPlayerItemDrop(DHookParam hParams)
             DataArray.PushString(s_image_url);
             DataArray.PushString(s_drop_info);
             char s_price_url[256];
-            UrlEncodeString(s_item_name, sizeof(s_item_name), s_item_name);
-            ReplaceString(s_item_name, sizeof(s_item_name), "&", "%26");
-            Format(s_price_url,sizeof(s_price_url),"https://steamcommunity.com/market/priceoverview/?appid=730&currency=%d&market_hash_name=%s",i_price,s_item_name);
+            UrlEncodeString(s_price_url, sizeof(s_item_name), s_item_name);
+            Format(s_price_url,sizeof(s_price_url),"https://steamcommunity.com/market/priceoverview/?appid=730&currency=%d&market_hash_name=%s",i_price,s_price_url);
             Handle h_request = SteamWorks_CreateHTTPRequest(k_EHTTPMethodGET, s_price_url);
             SteamWorks_SetHTTPRequestNetworkActivityTimeout(h_request, 10);
             SteamWorks_SetHTTPCallbacks(h_request, DropPrice);
@@ -309,7 +308,6 @@ void SentDropWebhook(int client, char[] item_name, char[] item_name_lang, char[]
             char s_price_url[256];
             if (!StrEqual(item_name, "-")){
                 UrlEncodeString(s_price_url, sizeof(s_price_url), item_name);
-                ReplaceString(s_price_url, sizeof(s_price_url), "+", "%20");
                 Format(s_price_url, sizeof(s_price_url),"[%s](https://steamcommunity.com/market/listings/730/%s)",item_price,s_price_url);
             }else{
                 Format(s_price_url, sizeof(s_price_url),"-");
@@ -347,14 +345,7 @@ void UrlEncodeString(char[] output, int size, const char[] input)
 		{
 			output[i_ocnt] = '\0';
 			return;
-		}
-		// Use '+' instead of '%20'.
-		// Still follows spec and takes up less of our limited buffer.
-		if (c == ' ')
-		{
-			output[i_ocnt++] = '+';
-		}
-		else if ((c < '0' && c != '-' && c != '.') ||
+		}else if ((c < '0' && c != '-' && c != '.') ||
 			(c < 'A' && c > '9') ||
 			(c > 'Z' && c < 'a' && c != '_') ||
 			(c > 'z' && c != '~')) 
