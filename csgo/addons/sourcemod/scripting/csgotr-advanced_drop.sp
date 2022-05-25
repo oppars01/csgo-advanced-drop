@@ -27,7 +27,6 @@ Address a_drop_for_all_players_patch = Address_Null;
 
 public void OnPluginStart()
 {   
-    RegAdminCmd("sm_dropfake", DropFake, ADMFLAG_ROOT, "DropFake");
     LoadTranslations("advanced-drop.phrases.txt");
     CVAR_Load();
     RegAdminCmd("sm_updatedropitems", CommandDropItemUpdate, ADMFLAG_ROOT);
@@ -243,42 +242,6 @@ MRESReturn Detour_RecordPlayerItemDrop(DHookParam hParams)
 		}
 	}
 	return MRES_Ignored;
-}
-
-public Action DropFake(int client, int args){
-    if(args == 1){
-        char s_def_index[8];
-        GetCmdArg(1, s_def_index, sizeof(s_def_index));
-        char s_item_name[256], s_item_name_lang[256], s_image_url[256], s_drop_info[16];
-        KeyValues kv = CreateKeyValues( "DropItems" );
-        FileToKeyValues( kv, s_drop_items );
-        KvRewind(kv);
-        if (!kv.JumpToKey(s_def_index))
-        {
-            /*Format(s_item_name,sizeof(s_item_name),"-");
-            Format(s_item_name,sizeof(s_item_name_lang),"%t", "Unknow Drop");
-            Format(s_image_url,sizeof(s_image_url),"https://csgo-turkiye.com/api/images/unknow_case.png");
-            SentDropWebhook(client,s_item_name,s_item_name_lang,s_image_url,s_drop_info);*/
-            PrintToServer("bulamadım");
-        }else{
-            KvGetString(kv, "item_name", s_item_name, sizeof(s_item_name), "-");
-            KvGetString(kv, "item_name_lang", s_item_name_lang, sizeof(s_item_name_lang), "NOT FOUND INFORMATION ABOUT DROP ITEM");
-            KvGetString(kv, "image_url", s_image_url, sizeof(s_image_url), "https://csgo-turkiye.com/api/images/unknow_case.png");
-            ArrayList DataArray = new ArrayList(ByteCountToCells(1024));
-            DataArray.Push(client);
-            DataArray.PushString(s_item_name);
-            DataArray.PushString(s_item_name_lang);
-            DataArray.PushString(s_image_url);
-            DataArray.PushString(s_drop_info);
-            char s_price_url[256];
-            UrlEncodeString(s_price_url, sizeof(s_item_name), s_item_name);
-            Format(s_price_url,sizeof(s_price_url),"market/priceoverview/?appid=730&currency=%d&market_hash_name=%s",i_price,s_price_url);
-            HTTPClient hc_request = new HTTPClient("https://steamcommunity.com");
-            hc_request.Get(s_price_url, DropPrice ,DataArray);
-        }
-        delete kv;
-    }
-    return Plugin_Handled;
 }
 
 void UpdateDropItemList(int client)
